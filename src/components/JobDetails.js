@@ -1,4 +1,4 @@
-import { jobDetailsContentEl } from "../common";
+import { jobDetailsContentEl } from "../common.js";
 
 const renderJobDetails = (jobItem) => {
   const jobDetailsHTML = `

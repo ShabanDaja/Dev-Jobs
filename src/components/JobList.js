@@ -1,6 +1,11 @@
-import { jobListSearchEl, jobDetailsContentEl } from "../common.js";
+import {
+  jobListSearchEl,
+  jobDetailsContentEl,
+  BASE_API_URL,
+} from "../common.js";
 import renderSpinner from "./Spinner.js";
 import renderJobDetails from "./JobDetails.js";
+import renderError from "./Error.js";
 
 const renderJobList = (jobItems) => {
   jobItems.slice(0, 7).forEach((jobItem) => {
@@ -29,7 +34,7 @@ const renderJobList = (jobItems) => {
 };
 
 //Job list component
-const clickHandler = (event) => {
+const clickHandler = async (event) => {
   event.preventDefault();
 
   //get clicked job element
@@ -52,26 +57,23 @@ const clickHandler = (event) => {
   const id = jobItemEl.children[0].getAttribute("href");
 
   // fetch job item data
-  fetch(`${BASE_API_URL}/jobs/${id}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          "Resource issue (e.g. resource doesen't exist) or server issue"
-        );
-      }
-      return response.json();
-    })
-    .then((data) => {
-      const { jobItem } = data;
+  try {
+    const response = await fetch(`${BASE_API_URL}/jobs/${id}`);
+    const data = await response.json();
 
-      renderSpinner("job-details");
+    if (!response.ok) {
+      throw new Error(data.description);
+    }
 
-      renderJobDetails(jobItem);
-    })
-    .catch((error) => {
-      renderSpinner("job-details");
-      renderError(error.message);
-    });
+    const { jobItem } = data;
+
+    renderSpinner("job-details");
+
+    renderJobDetails(jobItem);
+  } catch (error) {
+    renderSpinner("job-details");
+    renderError(error.message);
+  }
 };
 
 jobListSearchEl.addEventListener("click", clickHandler);
