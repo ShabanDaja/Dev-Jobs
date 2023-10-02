@@ -1,9 +1,4 @@
-import {
-  jobListSearchEl,
-  jobDetailsContentEl,
-  BASE_API_URL,
-} from "../common.js";
-import renderJobDetails from "./JobDetails.js";
+import { jobListSearchEl, jobDetailsContentEl } from "../common.js";
 import renderSpinner from "./Spinner.js";
 import renderJobDetails from "./JobDetails.js";
 
