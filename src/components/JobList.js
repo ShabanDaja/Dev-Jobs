@@ -55,8 +55,9 @@ const clickHandler = (event) => {
   fetch(`${BASE_API_URL}/jobs/${id}`)
     .then((response) => {
       if (!response.ok) {
-        console.log("Something went wrong!");
-        return;
+        throw new Error(
+          "Resource issue (e.g. resource doesen't exist) or server issue"
+        );
       }
       return response.json();
     })
@@ -67,7 +68,10 @@ const clickHandler = (event) => {
 
       renderJobDetails(jobItem);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      renderSpinner("job-details");
+      renderError(error.message);
+    });
 };
 
 jobListSearchEl.addEventListener("click", clickHandler);
