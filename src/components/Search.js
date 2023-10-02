@@ -1,12 +1,12 @@
 import {
   searchInputEl,
   searchFormEl,
-  spinnerSearchEl,
   jobListSearchEl,
   numberEl,
 } from "../common.js";
 
 import renderError from "./Error.js";
+import renderSpinner from "./Spinner.js";
 
 const submitHandler = (event) => {
   // prevent default behavior
@@ -26,7 +26,8 @@ const submitHandler = (event) => {
   searchInputEl.blur();
   // remove previous job items
   jobListSearchEl.innerHTML = "";
-  spinnerSearchEl.classList.add("spinner--visible");
+
+  renderSpinner("search");
 
   //fetch search results
   fetch(`https://bytegrad.com/course-assets/js/2/api/jobs?search=${searchText}`)
@@ -41,7 +42,7 @@ const submitHandler = (event) => {
       //extract job items only
       const { jobItems } = data;
 
-      spinnerSearchEl.classList.remove("spinner--visible");
+      renderSpinner("search");
       numberEl.textContent = jobItems.length;
 
       jobItems.slice(0, 7).forEach((jobItem) => {
