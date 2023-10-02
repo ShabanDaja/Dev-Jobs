@@ -3,6 +3,7 @@ import {
   searchFormEl,
   jobListSearchEl,
   numberEl,
+  BASE_API_URL,
 } from "../common.js";
 
 import renderError from "./Error.js";
@@ -30,7 +31,7 @@ const submitHandler = (event) => {
   renderSpinner("search");
 
   //fetch search results
-  fetch(`https://bytegrad.com/course-assets/js/2/api/jobs?search=${searchText}`)
+  fetch(`${BASE_API_URL}/jobs?search=${searchText}`)
     .then((response) => {
       if (!response.ok) {
         console.log("Something went wrong!");
