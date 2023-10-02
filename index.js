@@ -86,3 +86,19 @@ const submitHandler = event => {
         .catch(error => console.log(error));
 };
 searchFormEl.addEventListener('submit', submitHandler);
+
+//Job list component
+const clickHandler = event => {
+    event.preventDefault();
+
+    //get clicked job element
+    const jobItemEl = event.target.closest('.job-Item');
+
+    // remove  the active class from previously active job item
+    document.querySelector('.job-item--active').classList.remove('.job-item--active');
+
+    // add active class
+    jobItemEl.classList.add('job-item--active');
+};
+
+jobListSearchEl.addEventListener('click', clickHandler);
