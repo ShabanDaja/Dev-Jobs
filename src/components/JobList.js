@@ -58,7 +58,12 @@ const renderJobList = (whichJobList = "search") => {
                               </div>
                           </div>
                           <div class="job-item__right">
-                              <i class="fa-solid fa-bookmark job-item__bookmark-icon"></i>
+                              <i class="fa-solid fa-bookmark job-item__bookmark-icon ${
+                                state.bookmarkJobItems.some(
+                                  (bookmarkJobItem) =>
+                                    bookmarkJobItem.id === jobItem.id
+                                ) && "job-item__bookmark-icon--bookmarked"
+                              }"></i>
                               <time class="job-item__time">${
                                 jobItem.daysAgo
                               }</time>
