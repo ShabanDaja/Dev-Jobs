@@ -10,7 +10,17 @@ const clickHandler = (event) => {
   // Don't continue if click was outside bookmark button
   if (!event.target.className.includes("bookmark")) return;
 
-  state.bookmarkJobItems.push(state.activeJobItem);
+  if (
+    state.bookmarkJobItems.some(
+      (bookmarkJobItem) => bookmarkJobItem.id === state.activeJobItem.id
+    )
+  ) {
+    state.bookmarkJobItems = state.bookmarkJobItems.filter(
+      (bookmarkJobItem) => bookmarkJobItem.id !== state.activeJobItem.id
+    );
+  } else {
+    state.bookmarkJobItems.push(state.activeJobItem);
+  }
 
   //update bookmark icon
   document
