@@ -39,3 +39,13 @@ export const spinnerSearchEl = document.querySelector(".spinner--search");
 export const spinnerJobDetailsEl = document.querySelector(
   ".spinner--job-details"
 );
+
+export const getData = async (compLeteURL) => {
+  const response = await fetch(compLeteURL);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.description);
+  }
+  return data;
+};
