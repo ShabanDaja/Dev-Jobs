@@ -90,9 +90,6 @@ const clickHandler = async (event) => {
       jobItemWithActiveClass.classList.remove("job-item--active")
     );
 
-  // add active class
-  jobItemEl.classList.add("job-item--active");
-
   // empty the job details section
   jobDetailsContentEl.innerHTML = "";
   renderSpinner("job-details");
@@ -103,6 +100,9 @@ const clickHandler = async (event) => {
   //spread
   const allJobItems = [...state.searchJobItems, ...state.bookmarkJobItems];
   state.activeJobItem = allJobItems.find((jobItem) => jobItem.id === +id);
+
+  //render search job list
+  renderJobList();
 
   // add id to url
   history.pushState(null, "", `/#${id}`);
