@@ -4,6 +4,7 @@ export const DEFAULT_DISPLAY_TIME = 3500;
 //STATE
 export const state = {
   searchJobItems: [],
+  currentPage: 1,
 };
 
 export const bookmarksBtnEl = document.querySelector(".bookmarks-btn");
