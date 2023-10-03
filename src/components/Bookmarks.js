@@ -6,6 +6,18 @@ import {
 } from "../common.js";
 import renderJobList from "./JobList.js";
 
+const clickHandler = (event) => {
+  // Don't continue if click was outside bookmark button
+  if (!event.target.className.includes("bookmark")) return;
+
+  state.bookmarkJobItems.push(state.activeJobItem);
+
+  //update bookmark icon
+  document
+    .querySelector(".job-info__bookmark-icon")
+    .classList.toggle("job-info__bookmark-icon--bookmarked");
+};
+
 const mouseEnterHandler = () => {
   //makes bookmark button look active
   bookmarksBtnEl.classList.add("boockmarks.btn--active");
@@ -21,5 +33,6 @@ const mouseLeaveHandler = () => {
   jobListBookmarksEl.classList.remove("job-list--visible");
 };
 
+jobDetailsEl.addEventListener("click", clickHandler);
 bookmarksBtnEl.addEventListener("mouseenter", mouseEnterHandler);
 jobListBookmarksEl.addEventListener("mouseleave", mouseLeaveHandler);
