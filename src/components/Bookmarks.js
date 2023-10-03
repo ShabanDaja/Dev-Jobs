@@ -24,6 +24,9 @@ const mouseEnterHandler = () => {
 
   // make job list visible
   jobListBookmarksEl.classList.add("job-list--visible");
+
+  //render bookmarks job list
+  renderJobList("bookmarks");
 };
 const mouseLeaveHandler = () => {
   //makes bookmark button look inactive

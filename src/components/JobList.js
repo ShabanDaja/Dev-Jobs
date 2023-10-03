@@ -5,20 +5,32 @@ import {
   getData,
   state,
   RESULT_PER_PAGE,
+  jobListBookmarksEl,
 } from "../common.js";
 import renderSpinner from "./Spinner.js";
 import renderJobDetails from "./JobDetails.js";
 import renderError from "./Error.js";
 
-const renderJobList = () => {
-  jobListSearchEl.innerHTML = "";
-  state.searchJobItems
-    .slice(
+const renderJobList = (whichJobList = "search") => {
+  //Determine correct selector for Job list
+  const jobListEl =
+    whichJobList === "search" ? jobListSearchEl : jobListBookmarksEl;
+
+  jobListEl.innerHTML = "";
+
+  //determine the job items that should be rendered
+  let jobItems;
+  if (whichJobList === "search") {
+    jobItems = state.searchJobItems.slice(
       state.currentPage * RESULT_PER_PAGE - RESULT_PER_PAGE,
       state.currentPage * RESULT_PER_PAGE
-    )
-    .forEach((jobItem) => {
-      const newJobItemHTML = `
+    );
+  } else if (whichJobList === "bookmarks") {
+    jobItems = state.bookmarkJobItems;
+  }
+
+  jobItems.forEach((jobItem) => {
+    const newJobItemHTML = `
                   <li class="job-item ${
                     state.activeJobItem.id === jobItem.id
                       ? "job-item--active"
@@ -54,8 +66,8 @@ const renderJobList = () => {
                       </a>
                   </li>
               `;
-      jobListSearchEl.insertAdjacentHTML("beforeend", newJobItemHTML);
-    });
+    jobListEl.insertAdjacentHTML("beforeend", newJobItemHTML);
+  });
 };
 
 //Job list component
@@ -104,5 +116,6 @@ const clickHandler = async (event) => {
 };
 
 jobListSearchEl.addEventListener("click", clickHandler);
+jobListBookmarksEl.addEventListener("click", clickHandler);
 
 export default renderJobList;
